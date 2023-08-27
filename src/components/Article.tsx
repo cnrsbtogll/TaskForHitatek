@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import moment from 'moment';
 
@@ -9,9 +9,15 @@ interface ArticleProps {
     author?: string | null;
     date: string;
     source: string;
+    url: string;
 }
 
-const Article: React.FC<ArticleProps> = ({ urlToImage, title, description, author, date, source }) => {
+const Article: React.FC<ArticleProps> = ({ urlToImage, title, description, author, date, source, url }) => {
+    const handleOpenURL = () => {
+        if (url) {
+            Linking.openURL(url);
+        }
+    };
     return (
         <View style={styles.container}>
             {/* Image */}
@@ -32,6 +38,9 @@ const Article: React.FC<ArticleProps> = ({ urlToImage, title, description, autho
 
                 {/* Source */}
                 <Text style={{ marginTop: 10 }}>source: <Text style={styles.source}>{source}</Text></Text>
+                <TouchableOpacity onPress={handleOpenURL}>
+                    <Text style={styles.linkText}>Haberi Göster</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -52,7 +61,7 @@ const styles = StyleSheet.create({
         },
         backgroundColor: '#fff',
         elevation: 5,
-        marginVertical:10
+        marginVertical: 10
     },
     image: {
         height: 200,
@@ -89,5 +98,12 @@ const styles = StyleSheet.create({
         color: 'tomato',
         fontWeight: 'bold',
         fontSize: 18
-    }
+    },
+    linkText: {
+        color: 'tomato',
+        alignSelf: 'center',
+        fontSize: 20,
+        fontWeight: '900',
+        marginTop: 8,
+    },
 })

@@ -15,7 +15,8 @@ const HomeScreen = () => {
             description={item.description}
             author={item.author}
             date={item.publishedAt}
-            source={item.source.name} />}
+            source={item.source.name}
+            url={item.url} />}
         keyExtractor={(item) => `${item.title}-${item.source.name}-${item.publishedAt}`} />
     </SafeAreaView>
   )
