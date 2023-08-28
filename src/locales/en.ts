@@ -7,6 +7,7 @@ export default {
     "drawerTabMenuName2": "Change Language",
     "dateFormat": "MMM Do YY",
     "by": "By",
-    "source": "Source"
+    "source": "Source",
+    "language":'en'
   }
 }

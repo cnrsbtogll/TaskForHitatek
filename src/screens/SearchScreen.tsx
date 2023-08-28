@@ -1,51 +1,65 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import SearchBar from '../components/SearchBar'
-import ArticlesData from '../data/articles.json'
-import Article from '../components/Article'
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import SearchBar from '../components/SearchBar';
+import ArticlesData from '../data/articles.json';
+import Article from '../components/Article';
+import En from '../data/en.json';
+import Tr from '../data/tr.json';
+import ar from '../data/ar.json';
+import {useTranslation} from 'react-i18next';
 
 const SearchScreen = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filteredData, setFilteredData] = useState(ArticlesData);
+  const {t} = useTranslation();
+  const lang = t('language');
+  console.log(lang)
+  const articles_data = lang === 'tr' ? Tr : lang === 'en' ? En : ar;
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState(articles_data);
 
-    const handleSearch = (text: string) => {
-        setSearchTerm(text);
+  const handleSearch = (text: string) => {
+    setSearchTerm(text);
 
-        // JSON verisini filtrele
-        const filtered = ArticlesData.filter(
-            (item) =>
-                item.title.includes(text) || item.description.includes(text)
-        );
+    // JSON verisini filtrele
+    const filtered = articles_data.filter(
+      item => item.title.includes(text)
+    );
 
-        setFilteredData(filtered);
-    }
+    setFilteredData(filtered);
+  };
 
-    return (
-        <View style={styles.container}>
-            <SearchBar placeholder="Search..."
-                value={searchTerm}
-                onChangeText={handleSearch} />
-            <FlatList
-                data={filteredData}
-                renderItem={({ item }) =>
-                    <Article
-                        urlToImage={item.urlToImage}
-                        title={item.title}
-                        description={item.description}
-                        author={item.author}
-                        date={item.publishedAt}
-                        source={item.source.name}
-                        url={item.url} />}
-                keyExtractor={(item) => `${item.title}-${item.source.name}-${item.publishedAt}`} />
-        </View>
-    )
-}
+  return (
+    <View style={styles.container}>
+      <SearchBar
+        placeholder={t('bottomTabSearch')}
+        value={searchTerm}
+        onChangeText={handleSearch}
+      />
+      <FlatList
+        data={filteredData}
+        renderItem={({item}) => (
+          <Article
+            urlToImage={item.urlToImage}
+            title={item.title}
+            description={item.description}
+            author={item.author}
+            date={item.publishedAt}
+            source={item.source.name}
+            url={item.url}
+          />
+        )}
+        keyExtractor={item =>
+          `${item.title}-${item.source.name}-${item.publishedAt}`
+        }
+      />
+    </View>
+  );
+};
 
-export default SearchScreen
+export default SearchScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});

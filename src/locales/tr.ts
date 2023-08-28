@@ -7,6 +7,7 @@ export default {
     "drawerTabMenuName2": "Dili Değiştir",
     "dateFormat":"DD MMM YYYY",
     "by": "Yazar",
-    "source": "Kaynak"
+    "source": "Kaynak",
+    "language":'tr'
   }
 }
