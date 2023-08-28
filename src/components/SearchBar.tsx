@@ -1,5 +1,5 @@
-import { StyleSheet, TextInput, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, TextInput, View} from 'react-native';
+import React from 'react';
 
 interface SearchProps {
   placeholder: string;
@@ -7,31 +7,36 @@ interface SearchProps {
   onChangeText: (text: string) => void;
 }
 
-const SearchBar: React.FC<SearchProps> = ({ placeholder, value, onChangeText }) => {
+const SearchBar: React.FC<SearchProps> = ({
+  placeholder,
+  value,
+  onChangeText,
+}) => {
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder={placeholder}
         value={value}
-        onChangeText={onChangeText} />
+        onChangeText={onChangeText}
+      />
     </View>
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;
 
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    paddingHorizontal:10
+    paddingHorizontal: 10,
   },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
     color: '#000',
     borderWidth: 1,
-    borderColor: 'gray'
-  }
-})
+    borderColor: 'gray',
+  },
+});

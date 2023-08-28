@@ -1,7 +1,6 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import SearchBar from '../components/SearchBar';
-import ArticlesData from '../data/articles.json';
 import Article from '../components/Article';
 import En from '../data/en.json';
 import Tr from '../data/tr.json';
@@ -11,7 +10,7 @@ import {useTranslation} from 'react-i18next';
 const SearchScreen = () => {
   const {t} = useTranslation();
   const lang = t('language');
-  console.log(lang)
+  console.log(lang);
   const articles_data = lang === 'tr' ? Tr : lang === 'en' ? En : ar;
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(articles_data);
@@ -20,9 +19,7 @@ const SearchScreen = () => {
     setSearchTerm(text);
 
     // JSON verisini filtrele
-    const filtered = articles_data.filter(
-      item => item.title.includes(text)
-    );
+    const filtered = articles_data.filter(item => item.title.includes(text));
 
     setFilteredData(filtered);
   };
