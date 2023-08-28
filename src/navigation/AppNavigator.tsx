@@ -6,46 +6,54 @@ import HomeScreen from '../screens/HomeScreen';
 import LanguageScreen from '../screens/LanguageScreen';
 import SearchScreen from '../screens/SearchScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useTranslation } from 'react-i18next';
+
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 
 const MainTabNavigator: React.FC = () => {
-    return (
-        <Tab.Navigator screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
+  const { t } = useTranslation();
+  return (
+    <Tab.Navigator screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
 
-                if (route.name === 'News') {
-                    iconName = focused
-                        ? 'home'
-                        : 'home-outline';
-                } else if (route.name === 'Search') {
-                    iconName = focused ? 'search' : 'search-outline';
-                }
+        if (route.name === 'Home') {
+          iconName = focused
+            ? 'home'
+            : 'home-outline';
+        } else if (route.name === 'Search') {
+          iconName = focused ? 'search' : 'search-outline';
+        }
 
-                // You can return any component that you like here!
-                return <Ionicons name={iconName} size={size} color={color} />;
-            },
-            tabBarActiveTintColor: 'tomato',
-            tabBarInactiveTintColor: 'gray',
-        })}>
-            <Tab.Screen name="News" component={HomeScreen} />
-            <Tab.Screen name="Search" component={SearchScreen} />
-        </Tab.Navigator>
-    );
+        // You can return any component that you like here!
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: 'tomato',
+      tabBarInactiveTintColor: 'gray',
+      headerShown: false,
+    })}>
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: t('bottomTabHome') }} />
+      <Tab.Screen name="Search" component={SearchScreen} options={{ title: t('bottomTabSearch') }}/>
+    </Tab.Navigator>
+  );
 };
 
 const AppNavigator: React.FC = () => {
-    return (
-      <NavigationContainer>
-        <Drawer.Navigator>
-          <Drawer.Screen name="Home" component={MainTabNavigator} />
-          <Drawer.Screen name="Change Language" component={LanguageScreen} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    );
-  };
+  const { t } = useTranslation();
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator screenOptions={{
+        headerStyle: { backgroundColor: 'transparent' },
+        headerTintColor: 'black',
+      }}>
+        <Drawer.Screen name="News" component={MainTabNavigator} options={{ title: t('drawerTabMenuName1') }}/>
+        <Drawer.Screen name="ChangeLanguage" component={LanguageScreen} options={{ title: t('drawerTabMenuName2') }} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default AppNavigator

@@ -1,6 +1,7 @@
 import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import moment from 'moment';
+import { useTranslation } from 'react-i18next'
 
 interface ArticleProps {
     title: string;
@@ -13,6 +14,7 @@ interface ArticleProps {
 }
 
 const Article: React.FC<ArticleProps> = ({ urlToImage, title, description, author, date, source, url }) => {
+    const {t}= useTranslation();
     const handleOpenURL = () => {
         if (url) {
             Linking.openURL(url);
@@ -32,14 +34,14 @@ const Article: React.FC<ArticleProps> = ({ urlToImage, title, description, autho
                 <Text style={styles.description} numberOfLines={3}>{description}</Text>
 
                 <View style={styles.data}>
-                    <Text style={styles.heading}>by: <Text style={styles.author}>{author}</Text></Text>
-                    <Text style={styles.date}>{moment(date).format('MMM Do YY')}</Text>
+                    <Text style={styles.heading}>{t('by')}: <Text style={styles.author}>{author}</Text></Text>
+                    <Text style={styles.date}>{moment(date).format(t('dateFormat'))}</Text>
                 </View>
 
                 {/* Source */}
-                <Text style={{ marginTop: 10 }}>source: <Text style={styles.source}>{source}</Text></Text>
+                <Text style={{ marginTop: 10 }}>{t('source')}: <Text style={styles.source}>{source}</Text></Text>
                 <TouchableOpacity onPress={handleOpenURL}>
-                    <Text style={styles.linkText}>Haberi Göster</Text>
+                    <Text style={styles.linkText}>{t('showDetail')}</Text>
                 </TouchableOpacity>
             </View>
         </View>
